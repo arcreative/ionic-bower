@@ -14429,6 +14429,13 @@ function equals(o1, o2) {
   if (o1 !== o1 && o2 !== o2) return true; // NaN === NaN
   var t1 = typeof o1, t2 = typeof o2, length, key, keySet;
   if (t1 == t2 && t1 == 'object') {
+
+    // Patch to fix comparison of similar records
+    if (o1.__type && o1.__type === o2.__type && o1.id && o1.id === o2.id) {
+      return true;
+    }
+    // End patch
+
     if (isArray(o1)) {
       if (!isArray(o2)) return false;
       if ((length = o1.length) == o2.length) {
